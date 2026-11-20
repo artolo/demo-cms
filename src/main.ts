@@ -8,9 +8,11 @@ import './assets/main.css';
 import App from './App.vue';
 import router from './router';
 import { useAuthStore } from './modules/auth/stores/authStore';
+import Tooltip from 'primevue/tooltip';
 
 const app = createApp(App);
 const pinia = createPinia();
+app.directive('tooltip', Tooltip);
 app.use(pinia);
 app.use(ToastService);
 

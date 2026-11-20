@@ -1,5 +1,5 @@
 import { useSessionStorage } from '@vueuse/core';
-import type { AuthUser } from '../types/authTypes';
+import type { AuthUser } from '../types/authType';
 
 export interface AuthSessionStorageType {
     token: string | null;

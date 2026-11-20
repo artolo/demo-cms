@@ -1,4 +1,4 @@
-import type { AuthResponse, LoginCredentials } from '../types/authTypes';
+import type { AuthResponse, LoginCredentials } from '../types/authType';
 import { mockAuthResponse } from '@/mocks/authMock';
 
 export default {

@@ -23,7 +23,7 @@
     import Card from 'primevue/card';
     import AuthForm from './components/AuthForm.vue';
     import { useAuthStore } from './stores/authStore';
-    import type { LoginCredentials } from './types/authTypes';
+    import type { LoginCredentials } from './types/authType';
 
     const router = useRouter();
     const authStore = useAuthStore();

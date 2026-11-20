@@ -1,0 +1,58 @@
+import { defineStore } from 'pinia';
+
+import { wrapRequestTryCatch } from '@/services/wrapRequestTryCatch';
+import usersApi from '@/modules/users/api/usersApi.ts';
+
+import type { User } from '@/modules/users/types/userType.ts';
+import type { UsersStoreType } from '@/modules/users/types/usersStoreType.ts';
+
+export const useUsersStore = defineStore('UsersStore', {
+    state: (): UsersStoreType => ({
+        users: [],
+        isLoading: false,
+    }),
+
+    getters: {
+        activeUsers(state): User[] {
+            return state.users.filter((user) => user.status === 'active');
+        },
+
+        inactiveUsers(state): User[] {
+            return state.users.filter((user) => user.status === 'inactive');
+        },
+
+        pendingUsers(state): User[] {
+            return state.users.filter((user) => user.status === 'pending');
+        },
+
+        usersCount(state): number {
+            return state.users.length;
+        },
+    },
+
+    actions: {
+        assignUsers(users: User[]): void {
+            this.users = users;
+        },
+
+        async getUsersList(): Promise<void> {
+            this.isLoading = true;
+
+            try {
+                const response = await usersApi.getUsers();
+
+                console.log('API response:', response);
+
+                this.assignUsers(response);
+
+                console.log('Assigned users:', this.users);
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
+        clearUsers(): void {
+            this.users = [];
+        },
+    },
+});

@@ -26,7 +26,7 @@ const router = createRouter({
         {
             path: '/users',
             name: 'users',
-            component: () => import('@/modules/users/usersContainer.vue'),
+            component: () => import('@/modules/users/UsersContainer.vue'),
             meta: {
                 requiresAuth: true,
             },

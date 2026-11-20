@@ -1,7 +1,7 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 import authApi from '../api/authApi';
 import { authSessionStorage } from './authSessionStorage';
-import type { AuthUser, LoginCredentials } from '../types/authTypes';
+import type { AuthUser, LoginCredentials } from '../types/authType';
 
 interface AuthState {
     token: string | null;

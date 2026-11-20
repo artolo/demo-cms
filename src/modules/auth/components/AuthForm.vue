@@ -33,28 +33,19 @@
             {{ error }}
         </Message>
 
-        <Button
-            type="submit"
-            label="Zaloguj się"
-            icon="pi pi-sign-in"
-            :loading="loading"
-            :disabled="loading || !email.trim() || !password"
-            class="w-full"
-        />
+        <Button type="submit" label="Zaloguj się" icon="pi pi-sign-in" :loading="loading" :disabled="isSubmitDisabled" class="w-full" />
     </form>
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue';
-
+    import { computed, ref } from 'vue';
     import Button from 'primevue/button';
     import InputText from 'primevue/inputtext';
     import Password from 'primevue/password';
     import Message from 'primevue/message';
+    import type { LoginCredentials } from '../types/authType';
 
-    import type { LoginCredentials } from '../types/authTypes';
-
-    defineProps<{
+    const props = defineProps<{
         loading: boolean;
         error: string | null;
     }>();
@@ -65,6 +56,10 @@
 
     const email = ref('admin@demo.pl');
     const password = ref('');
+
+    const isSubmitDisabled = computed(() => {
+        return props.loading || !email.value.trim() || !password.value;
+    });
 
     function handleSubmit() {
         emit('submit', {

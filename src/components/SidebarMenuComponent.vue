@@ -19,7 +19,6 @@
                     :title="item.label"
                 >
                     <i :class="item.icon" />
-
                     <span class="hidden lg:block">
                         {{ item.label }}
                     </span>
@@ -31,7 +30,6 @@
                 <div class="flex size-9 shrink-0 items-center justify-center rounded-full bg-surface-100 text-surface-600">
                     <i class="pi pi-user" />
                 </div>
-
                 <div class="min-w-0">
                     <p class="truncate text-sm font-semibold text-surface-800">
                         {{ fullName }}
@@ -42,10 +40,8 @@
                     </p>
                 </div>
             </div>
-
             <button type="button" :class="logoutButtonClass" @click="handleLogout">
                 <i class="pi pi-sign-out text-lg" />
-
                 <span class="hidden lg:block"> Wyloguj się </span>
             </button>
         </div>
@@ -55,7 +51,6 @@
 <script setup lang="ts">
     import { computed } from 'vue';
     import { useRouter } from 'vue-router';
-
     import { useAuthStore } from '@/modules/auth/stores/authStore';
 
     interface MenuItem {
@@ -81,12 +76,14 @@
     ];
 
     const menuItemClass =
-        'flex items-center justify-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-surface-600 transition-colors hover:bg-surface-100 hover:text-surface-900 lg:justify-start';
+        'flex items-center justify-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-surface-600 transition-colors ' +
+        'hover:bg-surface-100 hover:text-surface-900 lg:justify-start';
 
     const activeMenuItemClass = 'bg-blue-50 text-blue-700';
 
     const logoutButtonClass =
-        'flex w-full items-center justify-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-surface-600 transition-colors hover:bg-red-50 hover:text-red-600 lg:justify-start';
+        'flex w-full items-center justify-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-surface-600 transition-colors ' +
+        'hover:bg-red-50 hover:text-red-600 lg:justify-start';
 
     const fullName = computed(() => {
         const { firstName, lastName } = authStore.user ?? {};

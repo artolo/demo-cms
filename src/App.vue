@@ -2,7 +2,7 @@
     <div v-if="isAuthenticatedLayout" class="flex min-h-screen bg-surface-50">
         <SidebarMenuComponent />
 
-        <main class="min-w-0 flex-1 overflow-x-hidden">
+        <main class="min-w-0 flex-1 overflow-x-hidden p-4">
             <RouterView />
         </main>
     </div>

@@ -1,11 +1,25 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+    <div v-if="isAuthenticatedLayout" class="flex min-h-screen bg-surface-50">
+        <SidebarMenuComponent />
+
+        <main class="min-w-0 flex-1 overflow-x-hidden">
+            <RouterView />
+        </main>
+    </div>
+
+    <RouterView v-else />
+
+    <NotificationComponent />
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+    import { computed } from 'vue';
+    import { RouterView, useRoute } from 'vue-router';
+
+    import SidebarMenuComponent from '@/components/SidebarMenuComponent.vue';
+    import NotificationComponent from '@/components/NotificationComponent.vue';
+
+    const route = useRoute();
+
+    const isAuthenticatedLayout = computed(() => route.meta.requiresAuth === true);
+</script>

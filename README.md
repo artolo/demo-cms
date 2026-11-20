@@ -40,3 +40,10 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### 
+
+```sh
+Login: 'admin@demo.pl'
+Password: 'Demo123!
+```

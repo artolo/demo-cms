@@ -61,7 +61,7 @@
                                             <div class="flex items-center gap-2 min-w-0">
                                                 <Checkbox
                                                     :model-value="column.checked"
-                                                    :binary="true"
+                                                    binary
                                                     :disabled="column.disabled"
                                                     @update:model-value="toggleColumn(column)"
                                                 />

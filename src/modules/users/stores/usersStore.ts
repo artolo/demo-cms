@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia';
-
-import { wrapRequestTryCatch } from '@/services/wrapRequestTryCatch';
 import usersApi from '@/modules/users/api/usersApi.ts';
 
 import type { User } from '@/modules/users/types/userType.ts';
@@ -40,12 +38,7 @@ export const useUsersStore = defineStore('UsersStore', {
 
             try {
                 const response = await usersApi.getUsers();
-
-                console.log('API response:', response);
-
                 this.assignUsers(response);
-
-                console.log('Assigned users:', this.users);
             } finally {
                 this.isLoading = false;
             }

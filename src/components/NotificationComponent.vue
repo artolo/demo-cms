@@ -1,9 +1,11 @@
+<template>
+    <Toast position="bottom-right" />
+</template>
+
 <script setup lang="ts">
     import { watch } from 'vue';
-
     import Toast from 'primevue/toast';
     import { useToast } from 'primevue/usetoast';
-
     import { useNotificationStore } from '@/stores/notificationStore';
 
     const notificationStore = useNotificationStore();
@@ -25,7 +27,3 @@
         },
     );
 </script>
-
-<template>
-    <Toast position="bottom-right" />
-</template>

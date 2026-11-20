@@ -2,7 +2,6 @@
     <form class="flex flex-col gap-5" @submit.prevent="handleSubmit">
         <div class="flex flex-col gap-2">
             <label for="email" class="font-medium text-sm"> Adres e-mail </label>
-
             <InputText
                 id="email"
                 v-model="email"
@@ -13,10 +12,8 @@
                 required
             />
         </div>
-
         <div class="flex flex-col gap-2">
             <label for="password" class="font-medium text-sm"> Hasło </label>
-
             <Password
                 v-model="password"
                 input-id="password"
@@ -28,11 +25,9 @@
                 required
             />
         </div>
-
         <Message v-if="error" severity="error" :closable="false">
             {{ error }}
         </Message>
-
         <Button type="submit" label="Zaloguj się" icon="pi pi-sign-in" :loading="loading" :disabled="isSubmitDisabled" class="w-full" />
     </form>
 </template>
@@ -44,6 +39,7 @@
     import Password from 'primevue/password';
     import Message from 'primevue/message';
     import type { LoginCredentials } from '../types/authType';
+    import { DEFAULT_USER_LOGIN } from '@/constants.ts';
 
     const props = defineProps<{
         loading: boolean;
@@ -54,7 +50,7 @@
         submit: [credentials: LoginCredentials];
     }>();
 
-    const email = ref('admin@demo.pl');
+    const email = ref(DEFAULT_USER_LOGIN);
     const password = ref('');
 
     const isSubmitDisabled = computed(() => {

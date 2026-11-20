@@ -1,13 +1,10 @@
 <template>
     <div class="flex flex-col gap-6">
-        <!-- Header -->
         <div class="flex flex-col gap-1">
             <h1 class="text-2xl font-semibold">Użytkownicy</h1>
 
             <p class="text-sm text-surface-500">Zarządzaj użytkownikami, ich uprawnieniami i dostępem do systemu.</p>
         </div>
-
-        <!-- Statistics -->
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <div
                 v-for="statistic in usersStatistics"
@@ -23,8 +20,6 @@
                 </span>
             </div>
         </div>
-
-        <!-- Users table -->
         <BaseTable
             :data="users"
             :value="users"
@@ -34,17 +29,12 @@
             @edit="handleEdit"
             @delete="handleDelete"
         >
-            <!-- Permission -->
             <template #permission="{ data }">
                 <Tag :value="userPermissionConfig[data.permission].label" severity="info" />
             </template>
-
-            <!-- Status -->
             <template #status="{ data }">
                 <Tag :value="userStatusConfig[data.status].label" :severity="userStatusConfig[data.status].severity" />
             </template>
-
-            <!-- Expanded row -->
             <template #expansion="{ data }">
                 <div class="flex flex-col gap-5 p-4">
                     <!-- User information -->
@@ -59,8 +49,6 @@
                             {{ data.details.bio }}
                         </p>
                     </div>
-
-                    <!-- Details grid -->
                     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div class="flex flex-col gap-1">
                             <span class="text-xs font-medium uppercase tracking-wide text-surface-500"> Dział </span>
@@ -115,7 +103,6 @@
                         </div>
                     </div>
 
-                    <!-- Skills -->
                     <div class="flex flex-col gap-3">
                         <span class="text-xs font-medium uppercase tracking-wide text-surface-500"> Umiejętności </span>
 
@@ -139,15 +126,11 @@
     import { computed, onMounted } from 'vue';
     import { format, parseISO } from 'date-fns';
     import { pl } from 'date-fns/locale';
-
     import Tag from 'primevue/tag';
-
     import BaseTable from '@/components/base/BaseTable.vue';
     import type { BaseTableColumn } from '@/components/base/types/baseTableType.ts';
-
     import { useUsersStore } from '@/modules/users/stores/usersStore.ts';
     import { userPermissionConfig, userStatusConfig } from '@/modules/users/constants/userConfig.ts';
-
     import type { User } from '@/modules/users/types/userType.ts';
 
     const usersStore = useUsersStore();
@@ -244,8 +227,5 @@
 
     onMounted(() => {
         usersStore.getUsersList();
-
-        console.log('Users from store:', usersStore.users);
-        console.log('Users count:', usersStore.users.length);
     });
 </script>

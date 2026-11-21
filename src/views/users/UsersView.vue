@@ -1,14 +1,12 @@
 <template>
     <TemplateWrapper :items="items">
         <template #actions>
-            <div class="flex flex-row">
-                <!--    @todo: Akcja dodania użytkownika - do zrobienia   -->
-                DODAJ
+            <div v-if="isAdmin" class="flex flex-row">
+                <UsersAddContainer />
             </div>
         </template>
         <template #default>
             <UsersContainer />
-            <pre>{{ isAdmin }}</pre>
         </template>
     </TemplateWrapper>
 </template>
@@ -20,6 +18,7 @@
     import type { BreadcrumbItem } from '@/types/breadcrumbItemType.ts';
     import UsersContainer from '@/modules/users/UsersContainer.vue';
     import { UserRole } from '@/constants.ts';
+    import UsersAddContainer from '@/modules/users/UsersAddContainer.vue';
 
     const authStore = useAuthStore();
     const isAdmin = computed<boolean>(() => authStore.user?.role === UserRole.SUPER_ADMIN || authStore.user?.role === UserRole.ADMIN);

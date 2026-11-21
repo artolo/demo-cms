@@ -24,8 +24,8 @@
             :data="users"
             :value="users"
             :columns="columns"
-            :loading="isLoading"
-            data-key="id"
+            :is-loading="isLoading"
+            show-actions
             @edit="handleEdit"
             @delete="handleDelete"
         >
@@ -37,7 +37,6 @@
             </template>
             <template #expansion="{ data }">
                 <div class="flex flex-col gap-5 p-4">
-                    <!-- User information -->
                     <div class="flex flex-col gap-1">
                         <div class="flex flex-wrap items-center gap-2">
                             <h3 class="text-base font-semibold">{{ data.firstName }} {{ data.lastName }}</h3>

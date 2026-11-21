@@ -21,7 +21,7 @@
                     </a>
                 </template>
             </Breadcrumb>
-            <div class="ml-auto mt-4 mr-3">
+            <div class="ml-auto mt-1 mr-3">
                 <slot name="actions" />
             </div>
         </div>

@@ -8,17 +8,18 @@
                         <p class="mt-2 text-sm font-normal text-muted-color">Zaloguj się do swojego konta</p>
                     </div>
                 </template>
+
                 <template #content>
-                    <AuthForm :loading="loading" :error="error" @submit="handleLogin" />
+                    <AuthForm :loading="authStore.isLoading" :error="authStore.error" @submit="handleLogin" />
                 </template>
             </Card>
+
             <p class="mt-5 text-center text-xs text-muted-color">Demo CMS © 2026</p>
         </div>
     </main>
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue';
     import { useRouter } from 'vue-router';
     import Card from 'primevue/card';
     import AuthForm from './components/AuthForm.vue';
@@ -28,21 +29,11 @@
     const router = useRouter();
     const authStore = useAuthStore();
 
-    const loading = ref(false);
-    const error = ref<string | null>(null);
+    async function handleLogin(credentials: LoginCredentials): Promise<void> {
+        const isLoggedIn = await authStore.login(credentials);
 
-    async function handleLogin(credentials: LoginCredentials) {
-        loading.value = true;
-        error.value = null;
-
-        try {
-            await authStore.login(credentials);
-
+        if (isLoggedIn) {
             await router.replace({ name: 'dashboard' });
-        } catch (err) {
-            error.value = err instanceof Error ? err.message : 'Wystąpił nieoczekiwany błąd.';
-        } finally {
-            loading.value = false;
         }
     }
 </script>

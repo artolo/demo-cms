@@ -1,5 +1,5 @@
 <template>
-    <main class="min-h-screen bg-surface-100 p-8">
+    <main class="min-h-screen p-8">
         <div class="mx-auto max-w-5xl">
             <Card>
                 <template #title> Dashboard </template>

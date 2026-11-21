@@ -1,4 +1,4 @@
-import type { AuthResponse } from '@/modules/auth/types/authTypes';
+import type { AuthResponse } from '@/modules/auth/types/authType';
 
 export const mockAuthResponse: AuthResponse = {
     token: 'demo-cms-mock-token',
@@ -7,6 +7,6 @@ export const mockAuthResponse: AuthResponse = {
         email: 'admin@demo.pl',
         firstName: 'Admin',
         lastName: 'Demo',
-        role: 'ADMIN',
+        role: 'admin',
     },
 };

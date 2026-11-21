@@ -3,7 +3,7 @@
         <DataTable
             v-model:filters="filters"
             v-model:expanded-rows="expandedRows"
-            :value="props.data"
+            :value="tableData"
             :loading="props.isLoading"
             :global-filter-fields="resolvedGlobalFilterFields"
             :paginator="props.showPaginator"
@@ -221,7 +221,7 @@
 
     const props = withDefaults(defineProps<Props>(), {
         isLoading: false,
-        itemPerPage: 10,
+        itemPerPage: 15,
         rowsPerPageOptions: () => [5, 10, 15, 20, 50],
         showSearch: true,
         showColumnSettings: true,
@@ -262,6 +262,8 @@
             checked: column.checked ?? true,
         })),
     );
+
+    const tableData = computed<T[]>(() => [...props.data]);
 
     const visibleColumns = computed(() => selectedColumns.value.filter((column) => column.checked));
 

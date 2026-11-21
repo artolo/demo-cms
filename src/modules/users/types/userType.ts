@@ -12,13 +12,20 @@ export interface UserDetails {
     skills: string[];
 }
 
-export interface User {
-    id: number;
+export interface UserBase {
     firstName: string;
     lastName: string;
     position: string;
     email: string;
     permission: UserPermission;
+}
+
+export interface UserFormData extends UserBase {
+    phone: string;
+}
+
+export interface User extends UserBase {
+    id: number;
     status: UserStatus;
     details: UserDetails;
 }

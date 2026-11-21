@@ -7,6 +7,8 @@ interface AuthState {
     token: string | null;
     user: AuthUser | null;
     isSessionRestored: boolean;
+    isLoading: boolean;
+    error: string | null;
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -14,6 +16,8 @@ export const useAuthStore = defineStore('auth', {
         token: null,
         user: null,
         isSessionRestored: false,
+        isLoading: false,
+        error: null,
     }),
 
     getters: {
@@ -28,6 +32,7 @@ export const useAuthStore = defineStore('auth', {
             if (!token || !user) {
                 this.token = null;
                 this.user = null;
+
                 authSessionStorage.value = {
                     token: null,
                     user: null,
@@ -40,23 +45,37 @@ export const useAuthStore = defineStore('auth', {
             this.isSessionRestored = true;
         },
 
-        async login(credentials: LoginCredentials): Promise<void> {
-            const response = await authApi.login(credentials);
+        async login(credentials: LoginCredentials): Promise<boolean> {
+            this.isLoading = true;
+            this.error = null;
 
-            this.token = response.token;
-            this.user = response.user;
+            try {
+                const response = await authApi.login(credentials);
 
-            authSessionStorage.value = {
-                token: response.token,
-                user: response.user,
-            };
+                this.token = response.token;
+                this.user = response.user;
 
-            this.isSessionRestored = true;
+                authSessionStorage.value = {
+                    token: response.token,
+                    user: response.user,
+                };
+
+                this.isSessionRestored = true;
+
+                return true;
+            } catch (err: unknown) {
+                this.error = err instanceof Error ? err.message : 'Wystąpił nieoczekiwany błąd.';
+
+                return false;
+            } finally {
+                this.isLoading = false;
+            }
         },
 
         logout(): void {
             this.token = null;
             this.user = null;
+            this.error = null;
 
             authSessionStorage.value = {
                 token: null,

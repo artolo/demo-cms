@@ -10,7 +10,7 @@ const router = createRouter({
         {
             path: '/login',
             name: 'login',
-            component: () => import('@/modules/auth/authContainer.vue'),
+            component: () => import('@/views/auth/AuthView.vue'),
             meta: {
                 guestOnly: true,
             },
@@ -18,7 +18,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'dashboard',
-            component: () => import('@/modules/dashboard/dashboardContainer.vue'),
+            component: () => import('@/views/dashboard/DashboardView.vue'),
             meta: {
                 requiresAuth: true,
             },
@@ -26,7 +26,7 @@ const router = createRouter({
         {
             path: '/users',
             name: 'users',
-            component: () => import('@/modules/users/UsersContainer.vue'),
+            component: () => import('@/views/users/UsersView.vue'),
             meta: {
                 requiresAuth: true,
             },

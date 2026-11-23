@@ -118,24 +118,41 @@
                 </div>
             </template>
         </BaseTable>
+        <BaseConfirmDialog
+            :visible="showDeleteDialog"
+            title="Usuń użytkownika"
+            :message="deleteConfirmationMessage"
+            confirm-label="Usuń użytkownika"
+            :loading="isDeleting"
+            @update:visible="handleDeleteDialogVisibility"
+            @confirm="confirmDelete"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
-    import { computed, onMounted } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { format, parseISO } from 'date-fns';
     import { pl } from 'date-fns/locale';
     import Tag from 'primevue/tag';
-    import BaseTable from '@/components/base/BaseTable.vue';
-    import type { BaseTableColumn } from '@/components/base/types/baseTableType.ts';
+    import BaseTable from '@/components/base/table/BaseTable.vue';
+    import type { BaseTableColumn } from '@/components/base/table/types/baseTableType.ts';
     import { useUsersStore } from '@/modules/users/stores/usersStore.ts';
     import { userPermissionConfig, userStatusConfig } from '@/modules/users/constants/userConfig.ts';
     import type { User } from '@/modules/users/types/userType.ts';
+    import { useUsersActionsStore } from '@/modules/users/stores/usersActionsStore.ts';
+    import BaseConfirmDialog from '@/components/base/confirm/BaseConfirmDialog.vue';
+
+    const emit = defineEmits(['edit']);
 
     const usersStore = useUsersStore();
+    const usersActionsStore = useUsersActionsStore();
+    const userToDelete = ref<User | null>(null);
+    const showDeleteDialog = ref<boolean>(false);
 
     const users = computed(() => usersStore.users);
     const isLoading = computed(() => usersStore.isLoading);
+    const isDeleting = computed(() => usersActionsStore.isSaving);
 
     const columns: BaseTableColumn<User>[] = [
         {
@@ -217,12 +234,41 @@
     }
 
     function handleEdit(user: User): void {
-        console.log('Edit user:', user);
+        usersActionsStore.user = user;
+        emit('edit');
     }
 
     function handleDelete(user: User): void {
-        console.log('Delete user:', user);
+        userToDelete.value = user;
+        showDeleteDialog.value = true;
     }
+
+    function handleDeleteDialogVisibility(value: boolean): void {
+        showDeleteDialog.value = value;
+
+        if (!value) {
+            userToDelete.value = null;
+        }
+    }
+
+    async function confirmDelete(): Promise<void> {
+        if (!userToDelete.value) {
+            return;
+        }
+
+        await usersActionsStore.deleteUser(userToDelete.value.id);
+
+        showDeleteDialog.value = false;
+        userToDelete.value = null;
+    }
+
+    const deleteConfirmationMessage = computed(() => {
+        if (!userToDelete.value) {
+            return '';
+        }
+
+        return `Czy na pewno chcesz usunąć użytkownika ${userToDelete.value.firstName} ${userToDelete.value.lastName}? Tej operacji nie można cofnąć.`;
+    });
 
     onMounted(() => {
         usersStore.getUsersList();

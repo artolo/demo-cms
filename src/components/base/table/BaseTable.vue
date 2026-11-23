@@ -200,7 +200,7 @@
     import Popover from 'primevue/popover';
     import Checkbox from 'primevue/checkbox';
     import { FilterMatchMode } from '@primevue/core/api';
-    import type { BaseTableColumn } from './types/baseTableType';
+    import type { BaseTableColumn } from './types/baseTableType.ts';
 
     interface Props {
         data: T[];

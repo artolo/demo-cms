@@ -58,13 +58,18 @@
         <div class="flex justify-between gap-2 pt-4 border-t border-surface-200">
             <Button label="Anuluj" severity="secondary" outlined type="button" @click="emit('cancel')" />
 
-            <Button label="Dodaj użytkownika" icon="pi pi-plus" type="submit" :disabled="usersActionsStore.isSaving" />
+            <Button
+                :label="isUserEditing ? 'Edytuj użytkownika' : 'Dodaj użytkownika'"
+                :icon="isUserEditing ? 'pi pi-user-edit' : 'pi pi-plus'"
+                type="submit"
+                :disabled="usersActionsStore.isSaving"
+            />
         </div>
     </form>
 </template>
 
 <script setup lang="ts">
-    import { reactive, ref } from 'vue';
+    import { computed, reactive, ref, watch } from 'vue';
     import * as yup from 'yup';
     import Button from 'primevue/button';
     import InputText from 'primevue/inputtext';
@@ -78,6 +83,8 @@
         cancel: [];
     }>();
 
+    const usersActionsStore = useUsersActionsStore();
+
     const permissionOptions: {
         label: string;
         value: User['permission'];
@@ -89,17 +96,47 @@
         { label: 'Użytkownik', value: UserRole.USER },
     ];
 
-    const form = reactive({
+    const form = reactive<UserFormData>({
         firstName: '',
         lastName: '',
         position: '',
         email: '',
         phone: '',
-        permission: null as User['permission'] | null,
+        permission: UserRole.USER,
     });
 
     const errors = ref<Record<string, string>>({});
-    const usersActionsStore = useUsersActionsStore();
+
+    const isUserEditing = computed(() => usersActionsStore.user !== null);
+    function populateForm(user: User | null): void {
+        if (!user) {
+            Object.assign(form, {
+                firstName: '',
+                lastName: '',
+                position: '',
+                email: '',
+                phone: '',
+                permission: UserRole.USER,
+            });
+
+            return;
+        }
+
+        Object.assign(form, {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            position: user.position,
+            email: user.email,
+            phone: user.phone ?? '',
+            permission: user.permission,
+        });
+    }
+
+    watch(
+        () => usersActionsStore.user,
+        (user) => populateForm(user),
+        { immediate: true },
+    );
 
     const schema = yup.object({
         firstName: yup.string().trim().required('Imię jest wymagane.'),

@@ -1,9 +1,19 @@
 <template>
     <div>
         <div class="flex border-b border-surface-200">
-            <Breadcrumb v-if="items.length" class="bg-gray-50 text-sm" :home="home" :model="items">
+            <Breadcrumb
+                v-if="items.length"
+                class="bg-gray-50 text-sm"
+                :home="home"
+                :model="items"
+            >
                 <template #item="{ item, props }">
-                    <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+                    <router-link
+                        v-if="item.route"
+                        v-slot="{ href, navigate }"
+                        :to="item.route"
+                        custom
+                    >
                         <a
                             :href="href"
                             v-bind="props.action"
@@ -16,7 +26,12 @@
                             </p>
                         </a>
                     </router-link>
-                    <a v-else :href="item.url" v-bind="props.action" class="text-black-alpha-40 hover:text-red-400 cursor-pointer">
+                    <a
+                        v-else
+                        :href="item.url"
+                        v-bind="props.action"
+                        class="text-black-alpha-40 hover:text-red-400 cursor-pointer"
+                    >
                         <span>{{ item.label }}</span>
                     </a>
                 </template>

@@ -17,9 +17,21 @@
 
         <template #footer>
             <div class="flex justify-end gap-2">
-                <Button label="Anuluj" severity="secondary" variant="outlined" :disabled="loading" @click="handleCancel" />
+                <Button
+                    label="Anuluj"
+                    severity="secondary"
+                    variant="outlined"
+                    :disabled="loading"
+                    @click="handleCancel"
+                />
 
-                <Button :label="confirmLabel" severity="danger" :loading="loading" :disabled="loading" @click="emit('confirm')" />
+                <Button
+                    :label="confirmLabel"
+                    severity="danger"
+                    :loading="loading"
+                    :disabled="loading"
+                    @click="emit('confirm')"
+                />
             </div>
         </template>
     </Dialog>

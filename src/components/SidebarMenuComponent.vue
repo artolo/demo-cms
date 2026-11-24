@@ -40,7 +40,11 @@
                     </p>
                 </div>
             </div>
-            <button type="button" :class="logoutButtonClass" @click="handleLogout">
+            <button
+                type="button"
+                :class="logoutButtonClass"
+                @click="handleLogout"
+            >
                 <i class="pi pi-sign-out text-lg" />
                 <span class="hidden lg:block"> Wyloguj się </span>
             </button>

@@ -10,7 +10,11 @@
                 </template>
 
                 <template #content>
-                    <AuthForm :loading="authStore.isLoading" :error="authStore.error" @submit="handleLogin" />
+                    <AuthForm
+                        :loading="authStore.isLoading"
+                        :error="authStore.error"
+                        @submit="handleLogin"
+                    />
                 </template>
             </Card>
 

@@ -1,10 +1,21 @@
 <template>
     <TemplateWrapper :items="items">
         <template #actions>
-            <div v-if="isAdmin" class="flex flex-row">
-                <Button label="Dodaj użytkownika" icon="pi pi-plus" severity="primary" @click="openDialog" />
+            <div
+                v-if="isAdmin"
+                class="flex flex-row"
+            >
+                <Button
+                    label="Dodaj użytkownika"
+                    icon="pi pi-plus"
+                    severity="primary"
+                    @click="openDialog"
+                />
 
-                <UsersAddOrEditContainer :show-dialog="showDialog" @close="closeDialog" />
+                <UsersAddOrEditContainer
+                    :show-dialog="showDialog"
+                    @close="closeDialog"
+                />
             </div>
         </template>
 

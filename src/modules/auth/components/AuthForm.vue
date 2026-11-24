@@ -1,7 +1,15 @@
 <template>
-    <form class="flex flex-col gap-5" @submit.prevent="handleSubmit">
+    <form
+        class="flex flex-col gap-5"
+        @submit.prevent="handleSubmit"
+    >
         <div class="flex flex-col gap-2">
-            <label for="email" class="font-medium text-sm"> Adres e-mail </label>
+            <label
+                for="email"
+                class="font-medium text-sm"
+            >
+                Adres e-mail
+            </label>
             <InputText
                 id="email"
                 v-model="email"
@@ -13,7 +21,12 @@
             />
         </div>
         <div class="flex flex-col gap-2">
-            <label for="password" class="font-medium text-sm"> Hasło </label>
+            <label
+                for="password"
+                class="font-medium text-sm"
+            >
+                Hasło
+            </label>
             <Password
                 v-model="password"
                 input-id="password"
@@ -25,10 +38,21 @@
                 required
             />
         </div>
-        <Message v-if="error" severity="error" :closable="false">
+        <Message
+            v-if="error"
+            severity="error"
+            :closable="false"
+        >
             {{ error }}
         </Message>
-        <Button type="submit" label="Zaloguj się" icon="pi pi-sign-in" :loading="loading" :disabled="isSubmitDisabled" class="w-full" />
+        <Button
+            type="submit"
+            label="Zaloguj się"
+            icon="pi pi-sign-in"
+            :loading="loading"
+            :disabled="isSubmitDisabled"
+            class="w-full"
+        />
     </form>
 </template>
 

@@ -30,10 +30,16 @@
             @delete="handleDelete"
         >
             <template #permission="{ data }">
-                <Tag :value="userPermissionConfig[data.permission].label" severity="info" />
+                <Tag
+                    :value="userPermissionConfig[data.permission].label"
+                    severity="info"
+                />
             </template>
             <template #status="{ data }">
-                <Tag :value="userStatusConfig[data.status].label" :severity="userStatusConfig[data.status].severity" />
+                <Tag
+                    :value="userStatusConfig[data.status].label"
+                    :severity="userStatusConfig[data.status].severity"
+                />
             </template>
             <template #expansion="{ data }">
                 <div class="flex flex-col gap-5 p-4">
@@ -41,7 +47,10 @@
                         <div class="flex flex-wrap items-center gap-2">
                             <h3 class="text-base font-semibold">{{ data.firstName }} {{ data.lastName }}</h3>
 
-                            <Tag :value="userStatusConfig[data.status].label" :severity="userStatusConfig[data.status].severity" />
+                            <Tag
+                                :value="userStatusConfig[data.status].label"
+                                :severity="userStatusConfig[data.status].severity"
+                            />
                         </div>
 
                         <p class="max-w-3xl text-sm leading-relaxed text-surface-500">

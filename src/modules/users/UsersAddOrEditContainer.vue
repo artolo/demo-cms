@@ -8,7 +8,13 @@
         :draggable="false"
         @update:visible="handleVisibilityChange"
     >
-        <UserForm v-if="showDialog" class="p-2" :is-editing="isUserEditing" @submit="handleSubmit" @cancel="closeDialog" />
+        <UserForm
+            v-if="showDialog"
+            class="p-2"
+            :is-editing="isUserEditing"
+            @submit="handleSubmit"
+            @cancel="closeDialog"
+        />
     </Dialog>
 </template>
 

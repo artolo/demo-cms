@@ -33,9 +33,21 @@
 
                     <div class="flex items-center gap-2 ml-auto">
                         <template v-if="hasExpander">
-                            <Button label="Rozwiń wszystko" severity="secondary" size="small" text @click="expandAll" />
+                            <Button
+                                label="Rozwiń wszystko"
+                                severity="secondary"
+                                size="small"
+                                text
+                                @click="expandAll"
+                            />
 
-                            <Button label="Zwiń wszystko" severity="secondary" size="small" text @click="collapseAll" />
+                            <Button
+                                label="Zwiń wszystko"
+                                severity="secondary"
+                                size="small"
+                                text
+                                @click="collapseAll"
+                            />
                         </template>
 
                         <div v-if="props.showColumnSettings">
@@ -96,9 +108,21 @@
                                     </div>
 
                                     <div class="flex flex-wrap gap-2 mt-4">
-                                        <Button label="Przywróć" severity="secondary" outlined size="small" @click="resetColumns" />
+                                        <Button
+                                            label="Przywróć"
+                                            severity="secondary"
+                                            outlined
+                                            size="small"
+                                            @click="resetColumns"
+                                        />
 
-                                        <Button label="Zaznacz wszystko" severity="secondary" text size="small" @click="checkAllColumns" />
+                                        <Button
+                                            label="Zaznacz wszystko"
+                                            severity="secondary"
+                                            text
+                                            size="small"
+                                            @click="checkAllColumns"
+                                        />
 
                                         <Button
                                             label="Odznacz wszystko"
@@ -117,12 +141,24 @@
                 </div>
             </template>
 
-            <Column v-if="props.showRowReorder" row-reorder header-style="width: 3rem" />
+            <Column
+                v-if="props.showRowReorder"
+                row-reorder
+                header-style="width: 3rem"
+            />
 
-            <Column v-if="hasExpander" header="Rozwiń" expander header-style="width: 3rem" />
+            <Column
+                v-if="hasExpander"
+                header="Rozwiń"
+                expander
+                header-style="width: 3rem"
+            />
 
             <template #expansion="slotProps">
-                <slot name="expansion" v-bind="slotProps" />
+                <slot
+                    name="expansion"
+                    v-bind="slotProps"
+                />
             </template>
 
             <Column
@@ -148,10 +184,19 @@
                 </template>
             </Column>
 
-            <Column v-if="props.showActions" header="Akcje" :exportable="false" header-style="width: 8rem">
+            <Column
+                v-if="props.showActions"
+                header="Akcje"
+                :exportable="false"
+                header-style="width: 8rem"
+            >
                 <template #body="slotProps">
                     <div class="flex items-center gap-1">
-                        <slot name="action-before" :item="slotProps.data" :index="slotProps.index" />
+                        <slot
+                            name="action-before"
+                            :item="slotProps.data"
+                            :index="slotProps.index"
+                        />
 
                         <Button
                             v-if="props.showEditButton && isRowEditable(slotProps.data)"
@@ -175,7 +220,11 @@
                             @click="deleteRow(slotProps.data)"
                         />
 
-                        <slot name="action-after" :item="slotProps.data" :index="slotProps.index" />
+                        <slot
+                            name="action-after"
+                            :item="slotProps.data"
+                            :index="slotProps.index"
+                        />
                     </div>
                 </template>
             </Column>

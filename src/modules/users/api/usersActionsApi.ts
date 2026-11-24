@@ -1,21 +1,16 @@
-import type { User, UserFormData } from '@/modules/users/types/userType.ts';
+import type { UserFormData } from '@/modules/users/types/userType.ts';
 
 const usersActionsApi = {
-    async addUser(payload: UserFormData): Promise<User> {
-        return Promise.resolve({
-            ...payload,
-            id: 0,
-            status: 'pending',
-            details: {
-                department: '',
-                location: '',
-                joinedAt: '',
-                lastLogin: '',
-                phone: payload.phone,
-                bio: '',
-                skills: [],
-            },
-        });
+    async addUser(payload: UserFormData): Promise<UserFormData> {
+        return Promise.resolve(payload);
+    },
+
+    async updateUser(payload: UserFormData): Promise<UserFormData> {
+        return Promise.resolve(payload);
+    },
+
+    async deleteUser(userId: number): Promise<void> {
+        return Promise.resolve();
     },
 };
 

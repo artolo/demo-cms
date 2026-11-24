@@ -1,18 +1,37 @@
 <template>
-    <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
+    <form
+        class="flex flex-col gap-4"
+        @submit.prevent="handleSubmit"
+    >
         <div class="grid grid-cols-2 gap-4">
             <div class="flex flex-col gap-2">
                 <label for="firstName">Imię *</label>
-                <InputText id="firstName" v-model="form.firstName" placeholder="Wprowadź imię" :invalid="!!errors.firstName" />
-                <small v-if="errors.firstName" class="text-red-500">
+                <InputText
+                    id="firstName"
+                    v-model="form.firstName"
+                    placeholder="Wprowadź imię"
+                    :invalid="!!errors.firstName"
+                />
+                <small
+                    v-if="errors.firstName"
+                    class="text-red-500"
+                >
                     {{ errors.firstName }}
                 </small>
             </div>
 
             <div class="flex flex-col gap-2">
                 <label for="lastName">Nazwisko *</label>
-                <InputText id="lastName" v-model="form.lastName" placeholder="Wprowadź nazwisko" :invalid="!!errors.lastName" />
-                <small v-if="errors.lastName" class="text-red-500">
+                <InputText
+                    id="lastName"
+                    v-model="form.lastName"
+                    placeholder="Wprowadź nazwisko"
+                    :invalid="!!errors.lastName"
+                />
+                <small
+                    v-if="errors.lastName"
+                    class="text-red-500"
+                >
                     {{ errors.lastName }}
                 </small>
             </div>
@@ -20,23 +39,43 @@
 
         <div class="flex flex-col gap-2">
             <label for="position">Stanowisko *</label>
-            <InputText id="position" v-model="form.position" placeholder="Np. Frontend Developer" :invalid="!!errors.position" />
-            <small v-if="errors.position" class="text-red-500">
+            <InputText
+                id="position"
+                v-model="form.position"
+                placeholder="Np. Frontend Developer"
+                :invalid="!!errors.position"
+            />
+            <small
+                v-if="errors.position"
+                class="text-red-500"
+            >
                 {{ errors.position }}
             </small>
         </div>
 
         <div class="flex flex-col gap-2">
             <label for="email">Adres e-mail *</label>
-            <InputText id="email" v-model="form.email" placeholder="jan.kowalski@example.com" :invalid="!!errors.email" />
-            <small v-if="errors.email" class="text-red-500">
+            <InputText
+                id="email"
+                v-model="form.email"
+                placeholder="jan.kowalski@example.com"
+                :invalid="!!errors.email"
+            />
+            <small
+                v-if="errors.email"
+                class="text-red-500"
+            >
                 {{ errors.email }}
             </small>
         </div>
 
         <div class="flex flex-col gap-2">
             <label for="phone">Numer telefonu</label>
-            <InputText id="phone" v-model="form.phone" placeholder="+48 500 000 000" />
+            <InputText
+                id="phone"
+                v-model="form.phone"
+                placeholder="+48 500 000 000"
+            />
         </div>
 
         <div class="flex flex-col gap-2">
@@ -50,21 +89,35 @@
                 placeholder="Wybierz uprawnienia"
                 :invalid="!!errors.permission"
             />
-            <small v-if="errors.permission" class="text-red-500">
+            <small
+                v-if="errors.permission"
+                class="text-red-500"
+            >
                 {{ errors.permission }}
             </small>
         </div>
 
         <div class="flex justify-between gap-2 pt-4 border-t border-surface-200">
-            <Button label="Anuluj" severity="secondary" outlined type="button" @click="emit('cancel')" />
+            <Button
+                label="Anuluj"
+                severity="secondary"
+                outlined
+                type="button"
+                @click="emit('cancel')"
+            />
 
-            <Button label="Dodaj użytkownika" icon="pi pi-plus" type="submit" :disabled="usersActionsStore.isSaving" />
+            <Button
+                :label="isUserEditing ? 'Edytuj użytkownika' : 'Dodaj użytkownika'"
+                :icon="isUserEditing ? 'pi pi-user-edit' : 'pi pi-plus'"
+                type="submit"
+                :disabled="usersActionsStore.isSaving"
+            />
         </div>
     </form>
 </template>
 
 <script setup lang="ts">
-    import { reactive, ref } from 'vue';
+    import { computed, reactive, ref, watch } from 'vue';
     import * as yup from 'yup';
     import Button from 'primevue/button';
     import InputText from 'primevue/inputtext';
@@ -78,6 +131,8 @@
         cancel: [];
     }>();
 
+    const usersActionsStore = useUsersActionsStore();
+
     const permissionOptions: {
         label: string;
         value: User['permission'];
@@ -89,17 +144,47 @@
         { label: 'Użytkownik', value: UserRole.USER },
     ];
 
-    const form = reactive({
+    const form = reactive<UserFormData>({
         firstName: '',
         lastName: '',
         position: '',
         email: '',
         phone: '',
-        permission: null as User['permission'] | null,
+        permission: UserRole.USER,
     });
 
     const errors = ref<Record<string, string>>({});
-    const usersActionsStore = useUsersActionsStore();
+
+    const isUserEditing = computed(() => usersActionsStore.user !== null);
+    function populateForm(user: User | null): void {
+        if (!user) {
+            Object.assign(form, {
+                firstName: '',
+                lastName: '',
+                position: '',
+                email: '',
+                phone: '',
+                permission: UserRole.USER,
+            });
+
+            return;
+        }
+
+        Object.assign(form, {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            position: user.position,
+            email: user.email,
+            phone: user.phone ?? '',
+            permission: user.permission,
+        });
+    }
+
+    watch(
+        () => usersActionsStore.user,
+        (user) => populateForm(user),
+        { immediate: true },
+    );
 
     const schema = yup.object({
         firstName: yup.string().trim().required('Imię jest wymagane.'),

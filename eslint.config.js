@@ -24,16 +24,15 @@ export default tseslint.config(
         rules: {
             eqeqeq: ['error'],
             'object-shorthand': 'error',
-            'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
-            '@typescript-eslint/no-explicit-any': 'warn',
-            'vue/singleline-html-element-content-newline': [
+
+            'no-multiple-empty-lines': [
                 'error',
                 {
-                    ignoreWhenNoAttributes: true,
-                    ignoreWhenEmpty: true,
-                    ignores: ['pre', 'textarea'],
+                    max: 1,
+                    maxEOF: 1,
                 },
             ],
+            '@typescript-eslint/no-explicit-any': 'warn',
             '@typescript-eslint/no-unused-vars': [
                 'error',
                 {
@@ -56,8 +55,23 @@ export default tseslint.config(
             'vue/max-attributes-per-line': [
                 'error',
                 {
-                    singleline: 3,
+                    singleline: 1,
                     multiline: 1,
+                },
+            ],
+            'vue/first-attribute-linebreak': [
+                'error',
+                {
+                    singleline: 'ignore',
+                    multiline: 'below',
+                },
+            ],
+            'vue/singleline-html-element-content-newline': [
+                'error',
+                {
+                    ignoreWhenNoAttributes: true,
+                    ignoreWhenEmpty: true,
+                    ignores: ['pre', 'textarea'],
                 },
             ],
             'vue/no-unused-vars': 'error',
